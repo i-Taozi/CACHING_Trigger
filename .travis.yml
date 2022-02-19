@@ -1,16 +1,15 @@
-# jgeohash .travis.yml
-
-language: java
-
+language: android
 jdk:
-    - openjdk8
-
-notifications:
-    email:
-        recipients:
-            - asterios.raptis@web.de
-        on_failure: always
-
-after_success:
-  - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-  - bash <(curl -s https://codecov.io/bash)
+  - oraclejdk8
+sudo: false
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools
+before_install:
+  - yes | sdkmanager "platforms;android-28"
+script:
+- "cp apikey.properties.example apikey.properties"
+- "./gradlew build check --daemon"
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
