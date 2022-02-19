@@ -1,5 +1,12 @@
+sudo: false
 language: java
 jdk:
-  - oraclejdk11
-install: true
-script: ./gradlew --settings-file travis-settings.gradle test
+  - oraclejdk8
+  - oraclejdk9
+after_success:
+- ./gradlew jacocoTestReport coveralls
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/

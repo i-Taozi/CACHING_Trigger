@@ -1,4 +1,11 @@
-out/**
+.classpath
 .gradle
-.gradleBuild
-.idea/
+.settings
+bin
+build
+.project
+*.iml
+*.ipr
+*.iws
+.idea
+gradle-app.setting
