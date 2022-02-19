@@ -1,25 +1,17 @@
-language: android
-android:
-   components:
-   - tools
-   - tools #Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
-   - platform-tools
-   - android-28
-   - build-tools-28.0.3
-   - extra
-   licenses:
-   - 'android-sdk-license-.+'
-
-jdk: oraclejdk8
-
-notifications:
-  email: false
-
-sudo: required #The build runs out of memory and is killed if we use the container system
-
-before_install:
-  - yes | sdkmanager "platforms;android-28"
-
-script:
-  - ./gradlew clean build
-  - ./gradlew test
+language: java
+sudo: false
+jdk:
+- openjdk8
+- openjdk9
+- openjdk10
+deploy:
+  provider: releases
+  api_key:
+    secure: QP+YLqMCvDHv3UDTQCfvARYdE/8ritfvZiPspZwCqDVSiwlI/U4z57lbyAmK4/hsm+grzDSQYhhdwxs3wlf2Ew0bJzT5ZcxgH9TQYFlMCo14tKGDvVr/hlARvGtrGmvWVtvECdPGXcVZjvhWeXQ0+VDdvWmOn97IV9/rOfwnk4w=
+  file: build/libs/OSMembrane.jar
+  skip_cleanup: true
+  on:
+    repo: openstreetmap/osmembrane
+    tags: true
+    all_branches: true
+    jdk: openjdk9
