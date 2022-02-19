@@ -1,135 +1,129 @@
-## Welcome to BuildCraft on GitHub
+* Please post questions in [Discussions](https://github.com/naver/ngrinder/discussions) not Issues.
+* nGrinder 3.5.5-p1 has been released. See https://github.com/naver/ngrinder/releases
 
-### Reporting an issue
+nGrinder 
+========
 
-Please open an issue for a bug report only if:
+[![Join the chat at https://gitter.im/naver/ngrinder](https://badges.gitter.im/naver/ngrinder.svg)](https://gitter.im/naver/ngrinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-* you are sure the bug is caused by BuildCraft and not by any other mod,
-* you have at least one of the following:
-  * a crash report, 
-  * means of reproducing the bug in question,
-  * screenshots/videos/etc. to demonstrate the bug.
 
-**If you are not sure if a bug report is valid, please use the "Ask Help!" subforum.**
+nGrinder is a platform for stress tests that enables you to execute script creation, test execution, monitoring, and result report generator simultaneously. The open-source nGrinder offers easy ways to conduct stress tests by eliminating inconveniences and providing integrated environments.
 
-Please only use **official BuildCraft releases** for any kind of bug reports unless otherwise told to do by the BuildCraft team. Custom builds (for instance from Jenkins) are unsupported, often buggy and will **not** get any support from the developers.
 
-Please check if the bug has been reported beforehand. Also, provide the version of BuildCraft used - if it's a version compiled from source, link to the commit/tree you complied from.
+Want to know what's changed from the original grinder platform?
+ * Checkout https://github.com/naver/ngrinder/wiki/Architecture !
 
-Please mention if you are using MCPC+, Cauldron, OptiFine, FastCraft or any other mods which optimize or otherwise severely modify the functioning of the Minecraft engine. That is very helpful when trying to reproduce a bug.
+To get to know what's different from previous ngrinder 2.0?
+ * Checkout http://www.slideshare.net/junhoyoon3994/ngrinder-30-load-test-even-kids-can-do !
 
-Please do not open issues for features unless you are a member of the BuildCraft team. For that, use the "Feature Requests" subforum.
+To get started,
+ * Checkout https://github.com/naver/ngrinder/wiki/User-Guide !
 
-BuildCraft, being an open-source project, gives you the right to submit a pull request if a particular fix or feature is important to you. However, if the change in question is major, please contact the team beforehand - we wish to prevent wasted effort.
+You can find out what nGrinder looks like with screen-shot.
+ * https://github.com/naver/ngrinder/wiki/Screen-Shot
 
-### Contributing
+nGrinder consists of two major components. 
 
-If you wish to submit a pull request to fix bugs or broken behaviour feel free to do so. If you would like to add 
-features or change existing behaviour or balance, please discuss it on discord before submitting a PR (https://discord.gg/v4geqgA).
+nGrinder controller
+ * a web application that enables the performance tester to create a test script and configure a test run
 
-Do not submit pull requests which solely "fix" formatting. As these kinds of changes are usually very intrusive in commit history and everyone has their own idea what "proper formatting" is, they should be done by one of the main contributors. 
-Please only submit "code cleanup", if the changes actually have a substantial impact on readability.
+nGrinder agent
+* a virtual user generator that creates loads.
 
-PR implementing new features or changing large portions of code are helpful. But if you're doing such a change and if it gets accepted, please don't "fire and forget". Complex changes are introducing bugs, and as thorough as testing and peer review may be, there will be bugs. Please carry on playing your changes after initial commit and fix residual issues. It is extremely frustrating for others to spend days fixing regressions introduced by unmaintained submissions.
 
-#### Frequently reported
+Features
+--------
 
-* java.lang.AbstractMethodError, java.lang.NoSuchMethodException
-  * A mod has not updated to the current BuildCraft API
-  * You are not using the correct version of BuildCraft for your Forge/Minecraft versions
-  * You are using the dev version on a normal game instance (or vice versa)
-* Render issue (Quarry causes flickering) - Try without OptiFine first! This is a known issue with some versions of OptiFine.
+* Use Jython script to create test scenario and generate stress in JVM using multiple agents.
+* Extend tests with custom libraries(jar, py). It's unlimited practically.
+* Provide web-based interface for project management, monitoring, result management and report management.
+* Run multiple tests concurrently. Assign the pre-installed multiple agents to maximize each agent's utilization.
+* Deploy agents on multiple network regions. Execute tests on various network locations
+* Embed Subversion to manage scripts.
+* Allow to monitor the state of agents generating stress and target machines receiving stress
+* Proven solution which is used to test huge systems having more than 100 million users in NHN.
 
-### Compiling and packaging BuildCraft
-1. Ensure that `Java` (found [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)), `Git` (found [here](http://git-scm.com/)) are installed correctly on your system.
- * Optional: Install `Gradle` (found [here](http://www.gradle.org/downloads)). You probably want to install version 4.3.1.
-2. Create a base directory for the build
-3. Clone the BuildCraft repository into 'baseDir/BuildCraft/'
-4. Clone (and update) the submodules into 'baseDir/BuildCraft with 'git submodule init' and 'git submodule update'
-5. Navigate to basedir/BuildCraft in a shell and run one of two commands:
-    * `./gradlew setupCIWorkspace build` to just build a current jar (this may take a while).
-    * `./gradlew setupDecompWorkspace` to setup a complete development environment.
-    * With `Gradle` installed: use `gradle` instead of `./gradlew`
-    * On Windows: use `gradlew.bat` instead of `./gradlew`
-6. The compiles and obfuscated module jars will be in 'baseDir/BuildCraft/build/libs/&lt;build number&gt;/modules'
 
-Your directory structure should look like this before running gradle:
-***
+Download
+--------
 
-    baseDir
-    \- BuildCraft
-     |- buildcraft_resources
-     |- common
-     |- ...
-     \- BuildCraftAPI
-      |- api
-      |- ...
-     \- BuildCraft-Localization
-      |- lang
-      |- ...
+You can download the latest nGrinder in the following link. 
+* https://github.com/naver/ngrinder/releases
 
-***
+Quick Start
+-------------
+You can start nGrinder by executing following command.
 
-And like this after running gradle:
-***
-
-    basedir
-    \- BuildCraft
-     |- .gradle
-     |- build
-     |- buildcraft_resources
-     |- common
-     |- ...
-     \- BuildCraftAPI
-      |- api
-      |- ...
-     \- BuildCraft-Localization
-      |- lang
-      |- ...
-
-***
-
-### Localizations
-
-Localizations can be submitted [here](https://github.com/BuildCraft/BuildCraft-Localization). Localization PRs against
-this repository will have to be rejected.
-
-### Depending on BuildCraft
-
-Instructions for depending on BC 7.1.x can be found [here](https://github.com/BuildCraft/BuildCraft/blob/7.1.x/README.md) (for 1.7.10).
-
-8.0.x hasn't been finished yet, so there are no instructions for depending on it :(
-
-The following instructions are for BC 7.99.12 (1.12.2):
-
-Add the following to your build.gradle file:
 ```
-repositories {
-    maven {
-        name "BuildCraft"
-        url = "https://mod-buildcraft.com/maven"
-    }
-}
-````
-
-If you want to depend on JUST the API then do this:
-````
-dependencies {
-    deobfCompile "com.mod-buildcraft:buildcraft-api:7.99.12"
-}
-````
-
-If you want to depend on JUST the lib then do this:
-````
-dependencies {
-    deobfCompile "com.mod-buildcraft:buildcraft-lib:7.99.12"
-}
-````
-
-If you want to depend on the whole of buildcraft do this:
+java -jar ngrinder-controller-{version}.war
 ```
-dependencies {
-    deobfCompile "com.mod-buildcraft:buildcraft:7.99.12"
-}
-```
-Where `7.99.12` is the desired version of BuildCraft.
+
+And then access it by using a browser. http://localhost:8080
+
+
+Documentation
+-------------
+You can find the installation guide at the following link.
+* https://github.com/naver/ngrinder/wiki/Installation-Guide
+
+You can find the user guide at the following location link.
+* https://github.com/naver/ngrinder/wiki/User-Guide
+
+
+Contribution?
+-------------
+nGrinder welcomes any contributions from users. Please make all pull requests against master branches.
+* Clone the REPO : 'git clone git://github.com/naver/ngrinder.git'
+
+You can find general developer documents at the following link.
+ * https://github.com/naver/ngrinder/wiki/Dev-Document
+
+
+Versioning
+----------
+
+For transparency and insight into our release cycle, and to strive to maintain backward compatibility, Bootstrap will be maintained under the Semantic Versioning guidelines to the greatest extent possible.
+
+Releases will be numbered in the following format:
+
+      `<major>.<minor>.<patch>`
+
+Release will be constructed based on the following guidelines:
+
+* Breaking backward compatibility bumps the major (and resets the minor and patch)
+* New additions without breaking backward compatibility bump the minor (and reset the patch)
+* Bug fixes and small enhancement. changes bump the patch
+
+
+Q/A and Bug tracker
+-------------------
+Found the apparent bug? Got a brilliant idea for an enhancement? Please create an issue here on GitHub so you can notify us!
+* https://github.com/naver/ngrinder/issues
+
+You can join our forum as well
+* Dev : http://ngrinder.373.s1.nabble.com/ngrinder-dev-f1.html 
+* User Forum : http://ngrinder.373.s1.nabble.com/ngrinder-user-f50.html
+* 中文论坛 (Chinese) : http://ngrinder.373.s1.nabble.com/ngrinder-user-cn-f114.html
+* 한국어 유저 포럼 (Korean): http://ngrinder.373.s1.nabble.com/ngrinder-user-kr-f113.html
+
+
+License
+-------
+
+     Copyright 2012-present NAVER Corp.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License. 
+      
+   
+nGrinder includes the following software and libraries as follows. See the NOTICE folder for the license and copyright details for each.
+* https://github.com/naver/ngrinder/tree/master/NOTICE
