@@ -1,108 +1,55 @@
-[![Logo](http://i.imgur.com/fpVkTZk.png)](http://www.openmrs.org)
+# PocketHub [![Build Status](https://travis-ci.org/pockethub/PocketHub.svg?branch=master)](https://travis-ci.org/pockethub/PocketHub) <a style="margin-bottom: 0;" href='https://play.google.com/store/apps/details?id=com.github.pockethub.android&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80px"/></a>
 
-OpenMRS Android Client and SDK
-==============================
+This repository contains the source code for the PocketHub Android app.
 
-[![Build Status Travis](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client) [![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/openmrs/openmrs-contrib-android-client?branch=master&svg=true)](https://ci.appveyor.com/project/AvijitGhosh82/openmrs-contrib-android-client) [![Demo Server](https://img.shields.io/badge/demo-online-green.svg)](http://devtest04.openmrs.org:8080/openmrs) [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=2.8.1&x2=0)](https://github.com/openmrs/openmrs-contrib-android-client/releases/latest) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/37fa8e86a3cb4256a3b7ffcc644f13c6)](https://www.codacy.com/app/marzeion-tomasz/openmrs-contrib-android-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=openmrs/openmrs-contrib-android-client&amp;utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/openmrs/openmrs-contrib-android-client/branch/master/graph/badge.svg)](https://codecov.io/gh/f4ww4z/openmrs-contrib-android-client) [![IRC](https://img.shields.io/badge/IRC-%23openmrs-1e72ff.svg?style=flat)](http://irc.openmrs.org)
+This is the *same* repository as the now-defunct official GitHub Android app.
 
-## Table of Contents
-- [OpenMRS Android Client](#OpenMRS-Android-Client)
-   - [Table of Contents](#Table-of-Contents)
-- [Description](#Description)
-         - [Key Features](#Key-Features)
-- [Screenshots](#Screenshots)
-- [Demo Server](#Demo-Server)
-            - [Demo Username: admin](#Demo-Username-admin)
-            - [Demo Password: Admin123](#Demo-Password-Admin123)
-- [Releasing [Collaborators only]](#Releasing-Collaborators-only)
-- [License](#License)
-- [Resources](#Resources)
+## What's going on here?
 
-# Description
-* The purpose of this project is to provide an OpenMRS client for Android devices. The app is designed to cover most of the functionality currently on the web application.
-The app communicates with OpenMRS instances using REST. It supports working offline (without a network connection). The database on the device is encrypted and password-protected to secure patient data.
-* In addition to the OpenMRS-Android-Client, this repository also has openmrs-android-sdk package which serves as an sdk which helps to build custom UI on top of the core functionality it provides.
+> What happened to the old app?
 
-# Development
-* We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
-To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
-Also, before creating a pull request, please run code review tools (Lint) and all tests.
+GitHub didn't want to maintain the app anymore, so it's been released to the community and maintained as a public project.
+We are actively working towards a re-release to the Play Store, and this app will be the spiritual successor to the original GitHub app.
 
-* There is a detailed guide for setting up the OpenMRS-Android-Client locally, before starting to contribute to the project [here](CONTRIBUTING.md).
+> What's PocketHub?
 
-#### 1. openmrs-android-sdk package
-* There was a need to make the app extendable without forking it out, instead just adding it as a dependency in any android application which wants to use the functionality but with a custom UI on top of it.
-* We can add the implementation    
-``` 
-    dependencies 
-    {
-        implementation 'com.github.openmrs:openmrs-contrib-android-client:deploy-android-sdk-SNAPSHOT'
-    } 
-```
-as a dependency in the app module build.gradle to get the functionality provided by openmrs-android-sdk.
-* The openmrs-android-sdk exposes the functionality through, methods present in various repository classes which just need to be plugged in with the UI and view-Model.
-* An simple example of the usage would be [this demo application](https://github.com/LuGO0/Test-Application), a more complex application depicting the usage would be the openmrs-client package itself. There is a confluence article [here](
-https://wiki.openmrs.org/display/docs/Getting+Started+with+openmrs-android-sdk) which will take you through the creation and usage of the test Application mentioned above.
-* The JavaDocs for the openmrs-android-sdk can be generated by running the Gradle command ./gradle dokkaHtml which will generate an HTML interface with documentation inside the openmrs-android-sdk/build directory.
+A name we decided that sounded good. We're a team of a few people helping organizing and prepare this. 
 
-#### 2. openmrs-client package
-* This package was earlier used as the sole package containing all the code for the OpenMRS-Android-Client now a part of it has been encapsulated in the form of openmrs-android-sdk and published on Jitpack from where it can simply be added as a dependency to any other app.
-* This package uses the methods exposed by the openmrs-android-sdk and builds UI on top of it, which can be used as an example to implement UI on top of openmrs-android-sdk.
-* The app is also published on PlayStore just to get used to the functionalities it provides and can be tested on local OpenMRS server or Demo OpenMRS Server.
+> What about the other forks out there?
 
-#### Key Features
-- Connect to OpenMRS server and sync all data
-- Register and Edit patients
-- Record Visits and Encounters
-- View patient data (Details, Diagnoses, Visits, and Vitals)
-- Allergies Module
-- Provider Module
-- Offline access (specific modules like provider, patient and some functionalities of allergy module)
+They'll remain forks. Obviously we'd prefer them to focus on improving this project, but otherwise we're not coordinating anything with them.
 
-# Screenshots
-<img src="https://user-images.githubusercontent.com/45125121/82362785-804c2800-9a2a-11ea-9bb1-f1b778c70de5.jpg" width="280" height="520" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="520"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="520">
- 
-# Demo Server
+> What's the immediate plan?
 
-The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
-In case the demo server fails to respond, you can use other alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
-##### Demo Username: admin
-##### Password: Admin123
-<br/>
- 
- 
- 
-# Releasing [Collaborators only]
+We're shooting for an initial re-release just to get the app out there. There have been a significant number of changes since the app was last updated, with many functional and design changes that we need to make sure are good to go.
 
-### 1. OpenMRS-Android-Client to PlayStore
-We follow the sprint model for development. Read more about it here: [OpenMRS Sprints](https://wiki.openmrs.org/display/RES/Development+Sprints).
-To release the application, make sure to do these steps **in order**:
+> What's the less-immediate plan?
 
-1. Update the [version variable in versions.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/versions.gradle#L6) prior to the release.
-3. Update the [Release notes](releaseNotes.md) file.
-4. Update the [release notes text file](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/src/main/play/release-notes/en-US/default.txt) to publish in the Play store. Ideally, change the wording so that normal end users understand.
-5. Now commit with the title `Release <version number here>` to the master branch.
-6. Tag the commit, using the version as the tag name. Make sure CI is green!
-7. Go to [the releases page](https://github.com/openmrs/openmrs-contrib-android-client/releases) and click the [Draft a new release](https://github.com/openmrs/openmrs-contrib-android-client/releases/new) button. It will create a new version tag in the repository and build the app. The tag name will be used as the version number for this. Be sure to bump unfinished issues to the next due version.
-8. Go to [JIRA's releases page](https://issues.openmrs.org/projects/AC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page), click on the three-dots on the right, and hit **Release**.
-9. Post a new Talk thread and describe what is changed or improved in the release.
+After the initial release, we'll start working on giving this app a proper refresh. Much of the UI has already been touched up with elements of Material Design, but we have a long ways to go. Android has changed a lot since this was actively developed, and it's time we take advantage of those changes.
 
-### 2. openmrs-android-sdk to jitpack
-1. The Openmrs-Android-sdk gets published to the Jitpack library so that it can be added as a dependency in various projects.
-2. Due to some issues with the release build configuration of the app is explained in detail [here](https://stackoverflow.com/questions/68420822/handling-release-keystore-while-uploading-android-library-to-jitpack) we are not able to do jitpack releases from the master branch.
-3. There is a dedicated branch for this purpose that has got only the debug variant of the android application. So that the jitpack build passes.
-4. For now until the issue gets resolved or we write a script for it, To release the latest code improvements in the openmrs-android-sdk package to the jitpack, we need to copy the whole package from master to branch deploy-android-sdk.
-5. After getting the latest code changes to branch deploy-android-sdk, we publish a snapshot of the branch to jitpack. So that the tag of jitpack published looks exactly like `deploy-android-sdk-SNAPSHOT`.
+> How can I help?
 
-# License
-This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.
+Please see the [issues](https://github.com/pockethub/PocketHub/issues) section to report any bugs or feature requests and to see the list of known issues. We can't promise fast response times since we all have full time jobs of our own, but we will do our best to respond in a timely fashion.  If you'd like to contribute, please fork this repository and contribute back using [pull requests](https://github.com/pockethub/PocketHub/pulls).
 
-# Resources
-- [User Guide](https://github.com/openmrs/openmrs-android-client-user-guide)
-- [Contribution Guidelines](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/CONTRIBUTING.md)
-- [JIRA](https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel)
-- [Sprint board](https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60)
-- [Dashboard](https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851)
-- [CI](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
-- [Google Play](https://play.google.com/store/apps/details?id=org.openmrs.mobile)
-- [Release Notes](releaseNotes.md)
+Any contributions, large or small, major features, bug fixes, additional language translations, unit/integration tests are welcomed and appreciated but will be thoroughly reviewed and discussed. **Please read [CONTRIBUTING.md](https://github.com/pockethub/PocketHub/blob/master/CONTRIBUTING.md) first!**
+
+## Setup Environment
+
+1. Create a GitHub application (https://github.com/settings/applications/new)
+2. Set the following gradle properties via one of the ways described [here](https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_properties_and_system_properties):
+  - `pockethub_github_client`=your_application_client_id
+  - `pockethub_github_secret`=your_application_client_secret
+  - `pockethub_github_callback`=your_callback_url
+
+### Callback URL
+- The callback URL needs to be in the format `your_schema://whatever_you_want`
+- Use a custom schema like `myawesomeschema` (not `http` or `https`)
+- The schema must be lowercase ([Reference](https://developer.android.com/guide/topics/manifest/data-element.html))
+
+## Legacy Notes
+
+If you had a current installation of the Github App installed and then enabled 2FA (2 Factor Authentication), then you must delete the Personal Access Token (PAT) from your configuration (via the web interface). A thanks to @landstander668 for posting this workaround.
+
+## License
+
+* [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
