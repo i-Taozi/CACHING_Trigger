@@ -1,11 +1,5 @@
-.classpath
 .gradle
-.settings
-bin
-build
-.project
-*.iml
-*.ipr
-*.iws
 .idea
-gradle-app.setting
+build
+out
+*.log
