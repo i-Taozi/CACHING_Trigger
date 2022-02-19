@@ -1,37 +1,42 @@
-// Sub projects may reference rootProject.version
-version = '3.3.0'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-}
+buildscript {
+    repositories {
+        jcenter()
+    }
 
-ext {
-    compileSdkVersion = 29
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0'
 
-    minSdkVersion = 7
-    targetSdkVersion = 25
-
-    // common dependencies for Android projects (not to be used in example projects for better copy and paste)
-    dep = [
-            androidPlugin: 'com.android.tools.build:gradle:3.5.3',
-
-            // Used only in tests, should point to the latest *published* version (not relevant to publishing)
-            greendaoPlugin: 'org.greenrobot:greendao-gradle-plugin:3.3.0'
-    ]
-}
-
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-subprojects {
+allprojects {
     repositories {
-        mavenCentral()
         jcenter()
-        google()
+    }
+}
+
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+
+    minSdkVersion = 14
+    targetSdkVersion = 22
+
+    SUPPORT_LIBRARY_VERSION = "22.2.+"
+
+    preDexLibs = !project.hasProperty('disablePreDex')
+}
+
+subprojects {
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        }
     }
 }
