@@ -1,20 +1,37 @@
-secret.properties
-_release_keys_
-NotePad_ant
-NotePad_ant/*
-.factorypath
-bin/
+*.class
+classes/
 build/
-.gradle
-gen/
-NotePad.apk
-Notes_for_ICS_Market_Link.png
-icon/
-proguard/
-.apt_generated
-.settings*
-translate-temp/
-*~
-*iml
+jar/
+release/
+.externalToolBuilders
+.metadata/
+.settings/
+glob:src/savedGame
+gameTypes
+pieceTypes
+savedGame
+savedGames/
+ACN File
+completedGames/
+gamesInProgress/
+variants/
+out/
+
+.gradle/
+
+# Package Files #
+*.war
+*.ear
+
+# Misc
+*.swp
+*.DS_Store
+
+# IntelliJ IDEA
+*.iml
 .idea
-local.properties
+
+# Eclipse
+.project
+.classpath
+bin/
