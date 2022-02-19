@@ -1,42 +1,149 @@
-apply plugin: 'java'
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+	}
+}
+
 apply plugin: 'idea'
 
-group = 'de.osmembrane'
-version = '1.0-SNAPSHOT'
-description = "OSMembrane - GUI for osmosis"
+/* Build collections containing each type of project.  These collections will
+ * be used to apply common configurations to projects of the same type.
+ */
+def packageProjects = allprojects.findAll { project -> project.path.equals(':package') }
+def buildProjects = allprojects.findAll { project -> project.path.equals(':build-support') }
+def dockerProjects = allprojects.findAll { project -> project.path.equals(':db-server') }
+// Java projects are all those that aren't in the previous collections.
+def javaProjects = subprojects.findAll { project -> !packageProjects.contains(project) && !buildProjects.contains(project) && !dockerProjects.contains(project) }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+// Apply common project configuration
+subprojects {
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'idea'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+	// All projects use a common group id.
+	group = 'org.openstreetmap.osmosis'
+
+	// Load the project version dynamically from Git.  For release builds, don't add a suffix.
+	def versionSuffix = "RELEASE".equals(osmosisBuildType) ? '' : '-' + osmosisBuildType
+	version = 'git describe --always --dirty'.execute().in.text.trim() + versionSuffix
+
+	// Enable access to artefact dependency repositories.
+	repositories {
+		// Standard Maven repository.
+		mavenCentral()
+	}
 }
 
-repositories {
-    maven { url "http://repo.maven.apache.org/maven2" }
-}
+// Apply common configurations to all projects supporting Java.
+configure(javaProjects) {
+	apply plugin: 'checkstyle'
+	apply plugin: 'java'
+	apply plugin: 'jdepend'
+	apply plugin: 'maven'
+	apply plugin: 'signing'
+	apply plugin: 'com.github.johnrengelman.shadow'
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'de.osmembrane.Main',
-                'SplashScreen-Image': 'de/osmembrane/resources/images/splash.png'
-        )
-    }
+	sourceCompatibility = 1.8
 
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    archiveName 'OSMembrane.jar'
-}
+	test {
+		/*
+		 * Pass on each of our custom properties to the unit tests if they have
+		 * been provided.
+		 */
+		['db.apidb.authfile', 'db.pgsql.authfile'].each {
+			propName ->
+				if (System.getProperties().containsKey(propName)) {
+					jvmArgs '-D' + propName + '=' + System.getProperty(propName)
+				}
+		}
+		//testLogging.showStandardStreams = true
+	}
 
-dependencies {
-    compile "org.jxmapviewer:jxmapviewer2:2.4"
+	dependencies {
+		testCompile group: 'junit', name: 'junit', version: dependencyVersionJunit
+	}
 
-    compile "javax.xml.bind:jaxb-api:2.3.0"
-    compile "com.sun.xml.bind:jaxb-core:2.3.0.1"
-    compile "com.sun.xml.bind:jaxb-impl:2.3.0.1"
-    compile "javax.activation:activation:1.1.1"
+	checkstyle {
+		configFile = new File(rootDir, 'build-support/checkstyle.xml')
+		configProperties.samedir = configFile.parentFile
+	}
 
-    testCompile "junit:junit:4.12"
+	// Build javadoc and source jars and include in published artifacts.
+	task javadocJar(type: Jar, dependsOn: javadoc) {
+		classifier = 'javadoc'
+		from 'build/docs/javadoc'
+	}
+	task sourcesJar(type: Jar) {
+		from sourceSets.main.allSource
+		classifier = 'sources'
+	}
+	artifacts {
+	    archives jar
+
+	    archives javadocJar
+	    archives sourcesJar
+	}
+
+	shadowJar {
+		baseName = project.name
+		mergeServiceFiles()
+		transform(com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransformer) {
+			resource = 'reference.conf'
+		}
+		zip64 = true
+	}
+
+	// Sign all published artifacts if signing is enabled.
+	signing {
+		sign configurations.archives
+		required = Boolean.valueOf(osmosisSigningEnabled)
+	}
+
+	// Configure the maven plugin to upload artefacts to the Sonatype repository.
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+				// We upload to the Sonatype SNAPSHOT repository unless it is a release build in
+				// which case we upload to the staging repository.
+				def sonatypeRepoUrl = "RELEASE".equals(osmosisBuildType) ?
+					'https://oss.sonatype.org/service/local/staging/deploy/maven2/' :
+					'https://oss.sonatype.org/content/repositories/snapshots/'
+				repository(url: sonatypeRepoUrl) {
+					authentication(userName: sonatypeUsername, password: sonatypePassword)
+				}
+
+				pom.project {
+					name project.name
+					packaging 'jar'
+					description 'Osmosis is a Java application and library for processing OSM data.'
+					url 'http://wiki.openstreetmap.org/wiki/Osmosis'
+
+					scm {
+						url 'https://github.com/openstreetmap/osmosis'
+						connection 'scm:git:git://github.com/openstreetmap/osmosis.git'
+						developerConnection 'scm:git:ssh://git@github.com/openstreetmap/osmosis.git'
+					}
+
+					licenses {
+						license {
+							name 'Public Domain'
+						}
+					}
+
+					developers {
+						developer {
+							id 'brett'
+							name 'Brett Henderson'
+							email 'brett@bretth.com'
+						}
+					}
+				}
+			}
+		}
+	}
 }

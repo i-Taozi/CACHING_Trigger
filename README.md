@@ -1,26 +1,50 @@
-# OSMembrane - The GUI for [osmosis](https://github.com/openstreetmap/osmosis) [![Build Status](https://travis-ci.org/openstreetmap/osmembrane.svg?branch=master)](https://travis-ci.org/openstreetmap/osmembrane)
-OSMembrane is a frontend to the Osmosis data processing tool. It helps by grouping tasks in functions and shows a visual representation of the pipeline. Additionally, it features a bounding box chooser and an AutoComplete list of key/key.value lists imported from JOSM.
+# Osmosis
+[![Build Status](https://travis-ci.org/openstreetmap/osmosis.svg?branch=master)](https://travis-ci.org/openstreetmap/osmosis)
 
-![screenshot](http://wiki.openstreetmap.org/w/images/0/09/OSMembraneThumb.png)
+## Overview
 
-## Install the current version
-A build of a recent version is always available on GitHub, you can download it [here](https://github.com/openstreetmap/OSMembrane/releases).
+Osmosis is a command line Java application for processing
+[Open Street Map](http://www.openstreetmap.org) data.
 
-[Java 10](http://www.oracle.com/technetwork/java/javase/downloads/index.html) is required to run OSMembrane (OpenJDK works fine). Depending on the operating 
-system you can just double click the downloaded JAR file or run it on the command line with `java -jar OSMembrane.jar`.
+The tool consists of a series of pluggable components that can be chained
+together to perform a larger operation. For example, it has components for
+reading from database and from file, components for writing to database and to
+file, components for deriving and applying change sets to data sources,
+components for sorting data, etc. It has been written so that it is easy to add
+new features without re-writing common tasks such as file or database handling.
 
-A quick [tutorial](https://github.com/openstreetmap/OSMembrane/blob/master/manual/manual.pdf) on how to use OSMembrane you can find [here](https://github.com/openstreetmap/OSMembrane/blob/master/manual/manual.pdf).
+The main point of entry for documentation is
+[the project wiki page](http://wiki.openstreetmap.org/wiki/Osmosis), although
+some information is included below.
 
-## Building the application
-The repository contains all necessary files to build the application from scratch by running [Gradle](https://gradle.org/). To actually build the application 
-simply run the Makefile. Windows users can use the `gradlew.bat`.
+## Status
 
-```
-# Build the application
-~ $ make build
-```
+Osmosis is in light-maintenance mode.
+[As of 2018 we’ve stopped active development](https://lists.openstreetmap.org/pipermail/osmosis-dev/2018-October/001847.html)
+and transitioned to periodic acceptance of pull requests with tests and minor version releases.
+Keep an eye on [osmosis-dev list](https://lists.openstreetmap.org/listinfo/osmosis-dev)
+for any updates.
 
-The resulting jar is located in the `build/libs` folder.
+## Usage
 
-## Credits
-OSMembrane was developed by Christian Endres, Jakob Jarosch and Tobias Kuhn during a practical student project at the University of Stuttgart which was supervised by Igor Podolskiy.
+* [The project wiki page](http://wiki.openstreetmap.org/wiki/Osmosis) is the best
+place to begin for new users.
+* [Detailed Usage](./doc/detailed-usage.adoc) is the main reference for experienced users.
+
+## Installation
+
+It is recommended to use a pre-built distribution archive rather than compile
+from source.  The location of the [latest builds are specified on the project
+wiki](https://wiki.openstreetmap.org/wiki/Osmosis#Latest_stable_version).
+These archives may be extracted to a location of your choice.  The bin
+sub-directory should either be added to your `PATH`, or in the case of UNIX-like
+environments the "osmosis" script may be symlinked into an existing directory
+already on the `PATH`.
+
+## Development
+
+See [Development](./doc/development.md) for details.
+
+## Issue Tracking
+
+See https://trac.openstreetmap.org/query?status=!closed&component=osmosis
