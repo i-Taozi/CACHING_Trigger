@@ -1,93 +1,86 @@
-OpenTripPlanner for Android [![Build Status](https://travis-ci.org/CUTR-at-USF/OpenTripPlanner-for-Android.svg?branch=master)](https://travis-ci.org/CUTR-at-USF/OpenTripPlanner-for-Android) [![Join the chat at https://gitter.im/CUTR-at-USF/OpenTripPlanner-for-Android](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CUTR-at-USF/OpenTripPlanner-for-Android?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-===========================
+VoxelSniper
+===========
 
-***NOTE: This application isn't being actively maintained. Please check out [OneBusAway](https://onebusaway.org/) instead, which uses OpenTripPlanner to plan trips. See the [OneBusAway Android System Architecture docs](https://github.com/OneBusAway/onebusaway-android/blob/master/SYSTEM_ARCHITECTURE.md) for details.***
+The premiere long-distance brush editor for [Sponge][Sponge].
 
-An Android app for multi-modal trip planning and navigation using any OpenTripPlanner server.
+Compilation
+-----------
 
-See more details on [the wiki](https://github.com/CUTR-at-USF/OpenTripPlanner-for-Android/wiki).
+We use gradle to handle our dependencies.
 
-Like hacking things?  See our [Developer Guide](https://github.com/CUTR-at-USF/OpenTripPlanner-for-Android/wiki/Developer-Guide) to get started.
+- Check out this repository.
+- Run ```./gradlew build```
 
-## Build Setup
+The master branch is automatically build on our jenkins server ([VoxelSniper Jenkins Job][JenkinsJob]).
 
-### Prerequisites for both Android Studio and Gradle
+Issue Tracker Notes
+-------------------
 
-1. Download and install the [Android SDK](http://developer.android.com/sdk/index.html).  Make sure to install the Google APIs for your API level (e.g., 17), the Android SDK Build-tools version for your buildToolsVersion version, and the Android Support Repository and Google Repository.
-2. Set the "ANDROID_HOME" environmental variable to your Android SDK location.
-3. Set the "JAVA_HOME" environmental variables to point to your JDK folder (e.g., "C:\Program Files\Java\jdk1.6.0_27")
+How do I create a ticket the right way?
 
-### Building in Android Studio
+- Seperate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appriciate it big times.
+- Don't tell us your story of life. We want facts and information. The more information about `the Problem` you give us, the easier it is for us to figure out what's wrong.
+- Check the closed tickets first. Maybe someone created a similiar ticket already. If you think it's unresolved, then give us more information on there instead.
 
-1. Download and install the latest version of [Android Studio](http://developer.android.com/sdk/installing/studio.html).
-2. In Android Studio, choose "Import Project" at the welcome screen.
-3. Browse to the location of the project, and double-click on the project directory.
-4. If prompted with options, check "Use auto-import", and select "Use default gradle wrapper (recommended)".  Click "Ok".
-5. Click the green play button (or 'Shift->F10') to run the project!
+### Bug Report
 
-### Building from the command line using Gradle
+Make sure to not tell us your story of life. We want brief descriptions of what's wrong to get directly to fixing.
+Also try to make the title describe briefly what's wrong and attach things like logs or screenshots to help illustrate the issue further.
 
-1. To build and push the app to the device, run `gradlew installDebug` from the command line at the root of the project
-2. To start the app, run `adb shell am start -n edu.usf.cutr.opentripplanner.android/.MyActivity` (alternately, you can manually start the app)
+Here is an example, where an imaginary brush that should create a ball, creates a cube:
 
-### Release builds
-
-To build a release build, you need to create a "gradle.properties" file that points to a "secure.properties" file, and a "secure.properties" file that points to your keystore and alias. The `gradlew assembleRelease` command will prompt for your keystore passphrase.
-
-The "gradle.properties" file is located in the opentripplanner-android directory and has the contents:
+Title: `Brush A creates Cube instead of Ball`
 
 ```
-secure.properties=<full_path_to_secure_properties_file>
+Expected behaviour:
+Brush A should create a ball with radius 5 when I set it to brush A with brush size 5.
+
+Experienced behaviour:
+Brush A created a cube instead.
+
+Additional Information:
+SpongeForge: 1.10.2-2052-5.0.0-BETA-1675
+Minecraft Forge: 12.18.1.2057
+VoxelSniper: 8.0.0
 ```
 
-The "secure.properties" file (in the location specified in gradle.properties) has the contents:
+Additional Information like what java version the server runs on would be appriciated, but is not required at all times.
+
+### Enhancement Request
+
+This is where imagination comes in, but make sure to keep as it easy for us. As mentioned, we don't want your story of life. We want to know what you think would be a good enhancement.
+
+Here is an example of an enhancement request.
+
+Title: `Brush that creates lines`
 
 ```
-key.store=<full_path_to_keystore_file>
+Enhancement Proposal:
+Creating a brush that creates a line.
+
+Suggested usage:
+You click two points with your arrow and it will create a line with blocks.
+
+Reason of proposal:
+It would be useful, since off angle lines are sometimes hard to make.
 ```
 
-```
-key.alias=<key_alias_name>
-```
+Keep in mind that those are guidelines.
+We will still look into stuff that does not follow these guidlines, but it will give you an idea what we want in a ticket and make our life easier.
 
-Note that the paths in these files always use the Unix path separator  `/`, even on Windows. If you use the Windows path separator `\` you will get the error `No value has been specified for property 'signingConfig.keyAlias'.`
+Pull Requests
+-------------
 
-### Contributing
+We do accept pull requests and enhancements from third parties. Guidelines how to submit your pull requests properly and how to format your code will come.
 
-We welcome contributions to the project!  Please see our [Contributing Guide](https://github.com/CUTR-at-USF/OpenTripPlanner-for-Android/blob/master/CONTRIBUTING.md) for details, including Code Style Guidelines and Template.
+Some rough guidelines for now:
 
-## Troubleshooting
+- Keep the number of commits to a minimum. We want to look over the commit and basically see what you've done.
+- Coding guidelines should try to comply to the checkstyle rules (checkstyle.xml) but not blindly. Use your mind to make smart decissions.
+- Give us a good description to what you've done.
+- Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
 
-### When importing to Android Studio, I get an error "You are using an old, unsupported version of Gradle..."
-
-If you're using Android Studio v0.4.2 or lower, when importing, please be sure to select the "settings.gradle" file in the root, **NOT** the project directory.
-You will get the above error if you select the project directory / name of the project.
-
-### I get build errors for the Android Support libraries or Google APIs
-
-Open Android SDK Manager, and under the "Extras" category make sure you've installed both the "Android Support Repository" (in addition to the "Android Support library") as well as the
- "Google Repository".  Also, make sure you have the Google API installed for the API level that you're working with in the "/build.gradle" file,
- including the "Android SDK Build-tools" version (at the top of the "Tools" category in the Android SDK Manager) that
- matches the compileSdkVersion and buildToolsVersion numbers in /opentripplanner-android/build.gradle.
-
-### I get the import gradle project error - “Cause: unexpected end of block data”
-
-Make sure you have the Google API installed for the API level that you're working with in the `/build.gradle` file,
- including the "Android SDK Build-tools" version (at the top of the "Tools" category in the Android SDK Manager) that
- matches the `compileSdkVersion` and `buildToolsVersion` numbers in `/opentripplanner-android/build.gradle`.
-
-### Android Studio or Gradle can't find my Android SDK, or the API Levels that I have installed
-
-Make sure that you're consistently using the same Android SDK throughout Android Studio and your environmental variables.
-Android Studio comes bundled with an Android SDK, and can get confused if you're pointing to this SDK within Android Studio
-but have your environmental variables pointed elsewhere.  Click "File->Project Structure", and then under "Android SDK"
-make sure you "Android SDK Location" is the correct location of your Android SDK.
-
-Also, make sure you've set the "ANDROID_HOME" environmental variable to your Android SDK location and
-the "JAVA_HOME" environmental variables to point to your JDK folder.
-
-## OpenTripPlanner Project
-
-Want to learn more about the main OpenTripPlanner project? Read up here:
-
-http://opentripplanner.org
+[VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
+[JenkinsJob]: http://ci.thevoxelbox.com/job/VoxelSniper/
+[Sponge]: https://www.spongepowered.org/
+[Gradle]: https://gradle.org/

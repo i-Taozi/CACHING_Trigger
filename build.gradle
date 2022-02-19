@@ -1,33 +1,112 @@
-/*
- * Copyright (C) 2013 University of South Florida (sjbarbeau@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-/**
- * Optimize build server performance by allowing disabling of pre-dexing
- * (See http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.)
- */
-project.ext.preDexLibs = !project.hasProperty('disablePreDex')
-
-subprojects {
-    project.plugins.whenPluginAdded { plugin ->
-        if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
-        } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
-        }
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
+    maven {
+      name = 'sponge-repo'
+      url = 'https://repo.spongepowered.org/maven'
+    }
+  }
+  dependencies {
+    classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.12.1"
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+// Plugins for IDE project generation
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+defaultTasks 'build'
+
+group = 'com.thevoxelbox'
+archivesBaseName = 'VoxelSniper'
+version = '8.5.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        name = 'sponge-repo'
+        url = 'https://repo.spongepowered.org/maven/'
+    }
+}
+
+// Common dependencies
+dependencies {
+    compile 'org.spongepowered:spongeapi:7.1.0'
+}
+
+// Source compiler configuration
+configure([compileJava, compileTestJava]) {
+    options.compilerArgs += ['-Xlint:all', '-Xlint:-path']
+    options.deprecation = true
+    options.encoding = 'UTF-8'
+}
+
+// Set manifest entries
+jar {
+  manifest {
+      attributes(
+              'Built-By': System.properties['user.name'],
+              'Created-By': "${System.properties['java.vm.version']} (${System.properties['java.vm.vendor']})"
+      )
+  }
+}
+
+javadoc {
+  options.encoding = 'UTF-8'
+  options.charSet = 'UTF-8'
+  options.links(
+          'https://docs.oracle.com/javase/8/docs/api/',
+          'https://jd.spongepowered.org/7.1.0/'
+  )
+  // Disable the crazy super-strict doclint tool in Java 8
+  options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+task sourceJar(type: Jar) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourceJar
+    archives javadocJar
+}
+
+processResources {
+  // Include LICENSE in final JAR
+  from 'LICENSE'
+}
+
+apply plugin: "com.github.hierynomus.license"
+
+// License header formatting
+license {
+  header = file('LICENSE')
+  include '**/*.java'
+
+  ignoreFailures = false
+  strictCheck = true
+
+  mapping {
+      java = 'SLASHSTAR_STYLE'
+  }
+}
+
+// Gradle version used for generating the Gradle wrapper
+wrapper {
+  gradleVersion = '5.6.2'
 }
