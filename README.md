@@ -1,54 +1,108 @@
-Spring XD
-=========
+[![Logo](http://i.imgur.com/fpVkTZk.png)](http://www.openmrs.org)
 
-*Spring XD* makes it easy to solve common big data problems such as data ingestion and export, real-time analytics, and batch workflow orchestration.  By building on mature, open source projects such as Spring Integration, Data and Batch, Spring XD will simplify the process of creating real-word big data solutions.  XD stands for 'eXtreme Data' or 'x' as in y=mx+b :)
+OpenMRS Android Client and SDK
+==============================
 
-While it is possible today to build such solutions using Spring (see the [Spring Data Book][] for details and examples), Spring XD will move well beyond the framework API level by providing an out-of-the-box executable server, a pluggable module system, a high level configuration DSL, a simple model for distributing data processing instances on or off the Hadoop cluster, and more.
+[![Build Status Travis](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client) [![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/openmrs/openmrs-contrib-android-client?branch=master&svg=true)](https://ci.appveyor.com/project/AvijitGhosh82/openmrs-contrib-android-client) [![Demo Server](https://img.shields.io/badge/demo-online-green.svg)](http://devtest04.openmrs.org:8080/openmrs) [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=2.8.1&x2=0)](https://github.com/openmrs/openmrs-contrib-android-client/releases/latest) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/37fa8e86a3cb4256a3b7ffcc644f13c6)](https://www.codacy.com/app/marzeion-tomasz/openmrs-contrib-android-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=openmrs/openmrs-contrib-android-client&amp;utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/openmrs/openmrs-contrib-android-client/branch/master/graph/badge.svg)](https://codecov.io/gh/f4ww4z/openmrs-contrib-android-client) [![IRC](https://img.shields.io/badge/IRC-%23openmrs-1e72ff.svg?style=flat)](http://irc.openmrs.org)
 
-You can fork the repository and/or monitor JIRA to see what is going on. As always, we consider the feedback from our broad and passionate community to be one of our greatest assets.
+## Table of Contents
+- [OpenMRS Android Client](#OpenMRS-Android-Client)
+   - [Table of Contents](#Table-of-Contents)
+- [Description](#Description)
+         - [Key Features](#Key-Features)
+- [Screenshots](#Screenshots)
+- [Demo Server](#Demo-Server)
+            - [Demo Username: admin](#Demo-Username-admin)
+            - [Demo Password: Admin123](#Demo-Password-Admin123)
+- [Releasing [Collaborators only]](#Releasing-Collaborators-only)
+- [License](#License)
+- [Resources](#Resources)
 
-## Documentation
+# Description
+* The purpose of this project is to provide an OpenMRS client for Android devices. The app is designed to cover most of the functionality currently on the web application.
+The app communicates with OpenMRS instances using REST. It supports working offline (without a network connection). The database on the device is encrypted and password-protected to secure patient data.
+* In addition to the OpenMRS-Android-Client, this repository also has openmrs-android-sdk package which serves as an sdk which helps to build custom UI on top of the core functionality it provides.
 
-Look for it on the [XD wiki](https://github.com/springsource/spring-xd/wiki). [API Documentation](http://static.springsource.org/spring-xd/docs/current-SNAPSHOT/api/) (JavaDoc) is available as well. Please also visit the SpringSource.org [project website](http://www.springsource.org/spring-xd) for more information.
+# Development
+* We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
+To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
+Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
-## How to build 
+* There is a detailed guide for setting up the OpenMRS-Android-Client locally, before starting to contribute to the project [here](CONTRIBUTING.md).
 
-Check the documentation on how to build Spring XD [here](http://docs.spring.io/spring-xd/docs/current-SNAPSHOT/reference/html/#building-spring-xd).
+#### 1. openmrs-android-sdk package
+* There was a need to make the app extendable without forking it out, instead just adding it as a dependency in any android application which wants to use the functionality but with a custom UI on top of it.
+* We can add the implementation    
+``` 
+    dependencies 
+    {
+        implementation 'com.github.openmrs:openmrs-contrib-android-client:deploy-android-sdk-SNAPSHOT'
+    } 
+```
+as a dependency in the app module build.gradle to get the functionality provided by openmrs-android-sdk.
+* The openmrs-android-sdk exposes the functionality through, methods present in various repository classes which just need to be plugged in with the UI and view-Model.
+* An simple example of the usage would be [this demo application](https://github.com/LuGO0/Test-Application), a more complex application depicting the usage would be the openmrs-client package itself. There is a confluence article [here](
+https://wiki.openmrs.org/display/docs/Getting+Started+with+openmrs-android-sdk) which will take you through the creation and usage of the test Application mentioned above.
+* The JavaDocs for the openmrs-android-sdk can be generated by running the Gradle command ./gradle dokkaHtml which will generate an HTML interface with documentation inside the openmrs-android-sdk/build directory.
 
-## Getting Help
+#### 2. openmrs-client package
+* This package was earlier used as the sole package containing all the code for the OpenMRS-Android-Client now a part of it has been encapsulated in the form of openmrs-android-sdk and published on Jitpack from where it can simply be added as a dependency to any other app.
+* This package uses the methods exposed by the openmrs-android-sdk and builds UI on top of it, which can be used as an example to implement UI on top of openmrs-android-sdk.
+* The app is also published on PlayStore just to get used to the functionalities it provides and can be tested on local OpenMRS server or Demo OpenMRS Server.
 
-* Get involved with the community on StackOverflow using the tag spring-xd.
+#### Key Features
+- Connect to OpenMRS server and sync all data
+- Register and Edit patients
+- Record Visits and Encounters
+- View patient data (Details, Diagnoses, Visits, and Vitals)
+- Allergies Module
+- Provider Module
+- Offline access (specific modules like provider, patient and some functionalities of allergy module)
 
-## License
+# Screenshots
+<img src="https://user-images.githubusercontent.com/45125121/82362785-804c2800-9a2a-11ea-9bb1-f1b778c70de5.jpg" width="280" height="520" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="520"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="520">
+ 
+# Demo Server
 
-*Spring XD* is released under version 2.0 of the [Apache License][].
+The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
+In case the demo server fails to respond, you can use other alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
+##### Demo Username: admin
+##### Password: Admin123
+<br/>
+ 
+ 
+ 
+# Releasing [Collaborators only]
 
-## Contributing to Spring XD
+### 1. OpenMRS-Android-Client to PlayStore
+We follow the sprint model for development. Read more about it here: [OpenMRS Sprints](https://wiki.openmrs.org/display/RES/Development+Sprints).
+To release the application, make sure to do these steps **in order**:
 
-Here are some ways for you to get involved 
+1. Update the [version variable in versions.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/versions.gradle#L6) prior to the release.
+3. Update the [Release notes](releaseNotes.md) file.
+4. Update the [release notes text file](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/src/main/play/release-notes/en-US/default.txt) to publish in the Play store. Ideally, change the wording so that normal end users understand.
+5. Now commit with the title `Release <version number here>` to the master branch.
+6. Tag the commit, using the version as the tag name. Make sure CI is green!
+7. Go to [the releases page](https://github.com/openmrs/openmrs-contrib-android-client/releases) and click the [Draft a new release](https://github.com/openmrs/openmrs-contrib-android-client/releases/new) button. It will create a new version tag in the repository and build the app. The tag name will be used as the version number for this. Be sure to bump unfinished issues to the next due version.
+8. Go to [JIRA's releases page](https://issues.openmrs.org/projects/AC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page), click on the three-dots on the right, and hit **Release**.
+9. Post a new Talk thread and describe what is changed or improved in the release.
 
-* Create [JIRA](https://jira.springsource.org/browse/XD) tickets for bugs and new features and comment and vote on the ones that you are interested in.
-* Follow the flow of developing on the [work board](https://jira.springsource.org/secure/RapidBoard.jspa?rapidView=6).
-* Github is for social coding: if you want to write code, we encourage contributions through pull requests from [forks of this repository](http://help.github.com/forking/).  If you want to contribute code this way, please familiarize yourself with the process outlined for contributing to Spring projects here: [Contributor Guidelines](https://github.com/SpringSource/spring-integration/wiki/Contributor-Guidelines).
+### 2. openmrs-android-sdk to jitpack
+1. The Openmrs-Android-sdk gets published to the Jitpack library so that it can be added as a dependency in various projects.
+2. Due to some issues with the release build configuration of the app is explained in detail [here](https://stackoverflow.com/questions/68420822/handling-release-keystore-while-uploading-android-library-to-jitpack) we are not able to do jitpack releases from the master branch.
+3. There is a dedicated branch for this purpose that has got only the debug variant of the android application. So that the jitpack build passes.
+4. For now until the issue gets resolved or we write a script for it, To release the latest code improvements in the openmrs-android-sdk package to the jitpack, we need to copy the whole package from master to branch deploy-android-sdk.
+5. After getting the latest code changes to branch deploy-android-sdk, we publish a snapshot of the branch to jitpack. So that the tag of jitpack published looks exactly like `deploy-android-sdk-SNAPSHOT`.
 
-Before we accept a non-trivial patch or pull request we will need you to sign the [contributor's agreement](https://support.springsource.com/spring_committer_signup).  Signing the contributor's agreement does not grant anyone commit rights to the main repository, but it does mean that we can accept your contributions, and you will get an author credit if we do.  Active contributors might be asked to join the core team, and given the ability to merge pull requests.
+# License
+This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.
 
-## Issue Tracking
-
-Report issues via the [Spring XD JIRA][].
-
-## Continuous Integration
-
-* **Master**: https://build.spring.io/browse/XD-MASTER
-* **Sonar**: https://build.spring.io/browse/XD-SONAR
-
-## Metrics
-
-Source Metrics are available via Sonar at:
-
-* https://sonar.springsource.org/dashboard/index/org.springframework.xd:spring-xd
-
-
-[Spring XD JIRA]: https://jira.springsource.org/browse/XD
-[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
-[Spring Data Book]: http://bit.ly/sd-book 
+# Resources
+- [User Guide](https://github.com/openmrs/openmrs-android-client-user-guide)
+- [Contribution Guidelines](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/CONTRIBUTING.md)
+- [JIRA](https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel)
+- [Sprint board](https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60)
+- [Dashboard](https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851)
+- [CI](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
+- [Google Play](https://play.google.com/store/apps/details?id=org.openmrs.mobile)
+- [Release Notes](releaseNotes.md)
