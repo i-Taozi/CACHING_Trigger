@@ -1,1 +1,2 @@
-include "ChessCrafterShared", "ChessCrafterDesktop"
+include ':colorpicker'
+include ':app'

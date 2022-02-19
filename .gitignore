@@ -1,37 +1,9 @@
-*.class
-classes/
-build/
-jar/
-release/
-.externalToolBuilders
-.metadata/
-.settings/
-glob:src/savedGame
-gameTypes
-pieceTypes
-savedGame
-savedGames/
-ACN File
-completedGames/
-gamesInProgress/
-variants/
-out/
-
-.gradle/
-
-# Package Files #
-*.war
-*.ear
-
-# Misc
-*.swp
-*.DS_Store
-
-# IntelliJ IDEA
+**/build
+/.settings
+/.gradle
+/.idea
 *.iml
-.idea
-
-# Eclipse
+.bak
 .project
 .classpath
-bin/
+local.properties
