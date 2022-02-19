@@ -1,4 +1,1 @@
-include ':common'
-include ':hrdevice'
 include ':app'
-include ':wear'

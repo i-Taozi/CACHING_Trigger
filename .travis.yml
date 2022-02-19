@@ -1,35 +1,25 @@
-env:
-  global:
-  - ANDROID_API=30
-  - ANDROID_BUILD_TOOLS=30.0.3
-  - ADB_INSTALL_TIMEOUT=5
 language: android
-jdk:
-- oraclejdk8
-cache:
-  directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
-before_cache:
-- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -f $HOME/.gradle/caches/*/classAnalysis/cache.properties.lock
-- rm -f $HOME/.gradle/caches/*/jarSnapshots/cache.properties.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+jdk: oraclejdk8
+sudo: false
+
 android:
   components:
-  - tools #latest for "builtin" sdk tools (24.4.1 in Android-25)
-  #To update SDK Tools to latest, another update is required
-  #- tools #latest, 26.1.1 as of 2018-10-07
-  #- platform-tools #latest, 28.0.1 as of 2018-10-07
-  - build-tools-$ANDROID_BUILD_TOOLS
-  - android-$ANDROID_API
-  - extra-android-m2repository
-  - extra-google-m2repository
-  - extra-google-google_play_services
-notifications:
-  email: false
+      # use the latest revision of Android SDK Tools
+    - tools
+    - platform-tools
+    # The BuildTools version used by the project
+    - build-tools-25.0.0
+    # The SDK version used to compile the project
+    - android-25
+    # Additional components, otherwise bild fails to find license signature
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 script:
-- ./gradlew wear:lintRelease
-- ./gradlew app:lintLatestRelease
-- ./gradlew app:assembleLatestRelease
-- ./gradlew app:test
+    bash gradlew test --continue --stacktrace
