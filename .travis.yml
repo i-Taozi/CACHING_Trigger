@@ -1,18 +1,12 @@
-dist: bionic
-sudo: false
-
 language: java
+
 jdk:
-  - oraclejdk13
-  - openjdk13
+  - oraclejdk8
 
-services:
-  - mongodb
+env:
+  - TERM=dumb
 
-install: ./gradlew assemble
-
-cache:
-  directories:
-  - $HOME/.gradle
-
-script: ./gradlew check --info --stacktrace
+before_script:
+  - mysql -e "create database petstore_test;"
+  - mysql -e "create user 'testbot'@'localhost' identified by 'petstore'";
+  - mysql -u root -e "grant all on petstore_test.* to 'testbot'@'localhost'";
