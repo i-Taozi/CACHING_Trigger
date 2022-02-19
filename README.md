@@ -1,129 +1,102 @@
-* Please post questions in [Discussions](https://github.com/naver/ngrinder/discussions) not Issues.
-* nGrinder 3.5.5-p1 has been released. See https://github.com/naver/ngrinder/releases
-
-nGrinder 
+JediTerm
 ========
 
-[![Join the chat at https://gitter.im/naver/ngrinder](https://badges.gitter.im/naver/ngrinder.svg)](https://gitter.im/naver/ngrinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+
+[![Build Status](https://travis-ci.org/JetBrains/jediterm.png?branch=master)](https://travis-ci.org/JetBrains/jediterm)
 
 
-nGrinder is a platform for stress tests that enables you to execute script creation, test execution, monitoring, and result report generator simultaneously. The open-source nGrinder offers easy ways to conduct stress tests by eliminating inconveniences and providing integrated environments.
+The main purpose of the project is to provide a pure Java terminal widget that can be easily embedded 
+into an IDE.
+It supports terminal sessions both for SSH connections and local PTY on Mac OSX, Linux and Windows.
 
 
-Want to know what's changed from the original grinder platform?
- * Checkout https://github.com/naver/ngrinder/wiki/Architecture !
+The library is used by JetBrains IDEs like PyCharm, IDEA, PhpStorm, WebStorm, AppCode, CLion, and Rider.
 
-To get to know what's different from previous ngrinder 2.0?
- * Checkout http://www.slideshare.net/junhoyoon3994/ngrinder-30-load-test-even-kids-can-do !
+Since version 2.5 there is a standalone version of the JediTerm terminal, provided as Mac OSX distribution.
 
-To get started,
- * Checkout https://github.com/naver/ngrinder/wiki/User-Guide !
 
-You can find out what nGrinder looks like with screen-shot.
- * https://github.com/naver/ngrinder/wiki/Screen-Shot
+The name JediTerm origins from J(from `Java`) + edi(reversed `IDE`) + Term(obviously from `terminal`).
+Also the word Jedi itself gives some confidence and hope in the Universe of thousands of different terminal implementations.
 
-nGrinder consists of two major components. 
 
-nGrinder controller
- * a web application that enables the performance tester to create a test script and configure a test run
+Run
+-------
 
-nGrinder agent
-* a virtual user generator that creates loads.
+To run the standalone JediTerm terminal from sources just execute _jediterm.sh_ or _jediterm.bat_.
+Or use the binary distribution from the [Releases](https://github.com/JetBrains/jediterm/releases/) page.
+
+
+
+Build
+-----
+
+Gradle is used to build this project. The project consists of 4 sub-projects:
+* **terminal**
+
+    The core library that provides VT100 compatible terminal emulator and Java Swing based implementation of terminal panel UI.
+
+* **ssh**
+
+    The jediterm-ssh.jar library that provides, using the Jsch library, a terminal for remote SSH terminal sessions.
+
+* **pty**
+
+    The jediterm-pty.jar library that, by using the [Pty4J](https://github.com/traff/pty4j) library, enables a terminal for local PTY terminal sessions.
+
+* **JediTerm**
+
+    The standalone version of the JediTerm terminal distributed as a .dmg for Mac OSX.
 
 
 Features
 --------
-
-* Use Jython script to create test scenario and generate stress in JVM using multiple agents.
-* Extend tests with custom libraries(jar, py). It's unlimited practically.
-* Provide web-based interface for project management, monitoring, result management and report management.
-* Run multiple tests concurrently. Assign the pre-installed multiple agents to maximize each agent's utilization.
-* Deploy agents on multiple network regions. Execute tests on various network locations
-* Embed Subversion to manage scripts.
-* Allow to monitor the state of agents generating stress and target machines receiving stress
-* Proven solution which is used to test huge systems having more than 100 million users in NHN.
-
-
-Download
---------
-
-You can download the latest nGrinder in the following link. 
-* https://github.com/naver/ngrinder/releases
-
-Quick Start
--------------
-You can start nGrinder by executing following command.
-
-```
-java -jar ngrinder-controller-{version}.war
-```
-
-And then access it by using a browser. http://localhost:8080
+* Ssh using JSch from jcraft.org
+* Local terminal for Unix, Mac and Windows using [Pty4J](https://github.com/traff/pty4j)
+* Xterm emulation - passes most of tests from vttest
+* Xterm 256 colours
+* Scrolling
+* Copy/Paste
+* Mouse support
+* Terminal resizing from client or server side
+* Terminal tabs
 
 
-Documentation
--------------
-You can find the installation guide at the following link.
-* https://github.com/naver/ngrinder/wiki/Installation-Guide
 
-You can find the user guide at the following location link.
-* https://github.com/naver/ngrinder/wiki/User-Guide
-
-
-Contribution?
--------------
-nGrinder welcomes any contributions from users. Please make all pull requests against master branches.
-* Clone the REPO : 'git clone git://github.com/naver/ngrinder.git'
-
-You can find general developer documents at the following link.
- * https://github.com/naver/ngrinder/wiki/Dev-Document
-
-
-Versioning
-----------
-
-For transparency and insight into our release cycle, and to strive to maintain backward compatibility, Bootstrap will be maintained under the Semantic Versioning guidelines to the greatest extent possible.
-
-Releases will be numbered in the following format:
-
-      `<major>.<minor>.<patch>`
-
-Release will be constructed based on the following guidelines:
-
-* Breaking backward compatibility bumps the major (and resets the minor and patch)
-* New additions without breaking backward compatibility bump the minor (and reset the patch)
-* Bug fixes and small enhancement. changes bump the patch
-
-
-Q/A and Bug tracker
--------------------
-Found the apparent bug? Got a brilliant idea for an enhancement? Please create an issue here on GitHub so you can notify us!
-* https://github.com/naver/ngrinder/issues
-
-You can join our forum as well
-* Dev : http://ngrinder.373.s1.nabble.com/ngrinder-dev-f1.html 
-* User Forum : http://ngrinder.373.s1.nabble.com/ngrinder-user-f50.html
-* 中文论坛 (Chinese) : http://ngrinder.373.s1.nabble.com/ngrinder-user-cn-f114.html
-* 한국어 유저 포럼 (Korean): http://ngrinder.373.s1.nabble.com/ngrinder-user-kr-f113.html
-
-
-License
+Authors
 -------
+Dmitry Trofimov <dmitry.trofimov@jetbrains.com>, Clément Poulain
 
-     Copyright 2012-present NAVER Corp.
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+Links
+-----
+ * Terminal protocol description: http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+ * Terminal Character Set Terminology and Mechanics: http://www.columbia.edu/kermit/k95manual/iso2022.html
+ * VT420 Programmer Reference Manual: http://manx.classiccmp.org/collections/mds-199909/cd3/term/vt420rm2.pdf
+ * Pty4J library: https://github.com/traff/pty4j
+ * JSch library: http://www.jcraft.com/jsch
+ * UTF8 Demo: http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-demo.txt
+ * Control sequences visualization: http://www.gnu.org/software/teseq/
+ * Terminal protocol tests: http://invisible-island.net/vttest/
 
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License. 
-      
-   
-nGrinder includes the following software and libraries as follows. See the NOTICE folder for the license and copyright details for each.
-* https://github.com/naver/ngrinder/tree/master/NOTICE
+
+
+Open Source Origin and History
+------
+The initial version of the JediTerm was a reworked terminal emulator Gritty, which was in it's own turn a reworked JCTerm 
+terminal implementation. Now there is nothing in the source code left from Gritty and JCTerm. Everything was 
+rewritten from scratch. A lot of new features were added.
+
+Character sets designation and mapping implementation is based on
+respective classes from jVT220 (https://github.com/jawi/jVT220, Apache 2.0 licensed) by J.W. Janssen.
+
+
+Standalone distribution relies heavily on customized Swing UI widgets taken from IntelliJ Community platform repository
+(https://github.com/JetBrains/intellij-community) by JetBrains.
+
+
+Licenses
+-------
+JediTerm is dual-licensed under both the LGPLv3 (found in the LICENSE-LGPLv3.txt file in the root directory) and Apache 2.0 License (found in the LICENSE-APACHE-2.0.txt file in the root directory). 
+You may select, at your option, one of the above-listed licenses.
