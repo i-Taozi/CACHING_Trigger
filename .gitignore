@@ -1,41 +1,15 @@
-# Eclipse stuff
-.classpath
-.project
-.settings/
-
-# netbeans
-nbproject
-
-# maven
-/*/target/
-target/
-
-# gradle
-.gradle/
-
-# vim
-.*.sw[a-p]
-
-# various other potential build files
-/*/build/
-/buildassets/map_*.txt
-/*/bin/
-/*/dist/
-/*/manifest.mf
-/release
-
-# Mac filesystem dust
-.DS_Store
-
-# intellij
+MIDIDriverSample/target
+MIDIDriver/target
+MIDIDriver/.settings
+MIDIDriverSample/.settings
+MIDIDriver/bin
+MIDIDriverSample/bin
+MIDIDriver/gen
+MIDIDriverSample/gen
+MIDIDriverSample/build
+MIDIDriver/build
+.idea
+.gradle
 *.iml
-*.ipr
-*.iws
-.idea/
-
-.checkstyle
-
-# Testfiles
-test.sh
-/bin/
-/build/
+local.properties
+build

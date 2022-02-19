@@ -1,86 +1,52 @@
-VoxelSniper
-===========
+Android USB MIDI Driver
+====
+[![Build Status](https://travis-ci.com/kshoji/USB-MIDI-Driver.svg?branch=develop)](https://travis-ci.com/kshoji/USB-MIDI-Driver)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-USB%20MIDI%20Driver-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/511)
 
-The premiere long-distance brush editor for [Sponge][Sponge].
+USB MIDI Driver using Android USB Host API
 
-Compilation
------------
+- No root privilege needed.
+- Supports the standard USB MIDI devices; like sequencers, or instruments.
+- Supports some non-standard USB MIDI (but protocol is compatible with USB MIDI) devices.
+    - YAMAHA, Roland, MOTU, or other makers' devices listed on [device_filter.xml](https://github.com/kshoji/USB-MIDI-Driver/blob/master/MIDIDriver/res/xml/device_filter.xml) can be connected.
+- Supports multiple device connections.
+- Has `javax.sound.midi` compatible classes.
+    - See the [javax.sound.midi Documents](https://github.com/kshoji/USB-MIDI-Driver/wiki/javax.sound.midi-porting-for-Android).
 
-We use gradle to handle our dependencies.
+Requirement
+====
+- Android : OS version 3.1(API Level 12) or higher, and have an USB host port.
+    - The android Linux kernel must support USB MIDI devices. Some Android device recognizes only USB-HID and USB-MSD by kernel configurations.
+- USB MIDI (compatible) device
 
-- Check out this repository.
-- Run ```./gradlew build```
+the optional thing:
 
-The master branch is automatically build on our jenkins server ([VoxelSniper Jenkins Job][JenkinsJob]).
+- The self powered USB hub (if want to connect multiple USB MIDI devices).
+- USB OTG cable (if the Android device has no standard USB-A port).
+- USB MIDI <--> Lagacy MIDI(MIDI 1.0) converter cable (if want to connect with legacy MIDI instruments).
 
-Issue Tracker Notes
--------------------
+Repository Overview
+====
+- Library Project : `MIDIDriver`
+    - The driver for connecting an USB MIDI device.
 
-How do I create a ticket the right way?
+- Sample Project : `MIDIDriverSample`
+    - The sample implementation of the synthesizer / MIDI event logger.
+    - Pre-compiled sample project is available on [Google Play Market](https://play.google.com/store/apps/details?id=jp.kshoji.driver.midi.sample).
 
-- Seperate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appriciate it big times.
-- Don't tell us your story of life. We want facts and information. The more information about `the Problem` you give us, the easier it is for us to figure out what's wrong.
-- Check the closed tickets first. Maybe someone created a similiar ticket already. If you think it's unresolved, then give us more information on there instead.
+Library Project Usages
+====
 
-### Bug Report
+See the [project wiki](https://github.com/kshoji/USB-MIDI-Driver/wiki) for the library usages.
 
-Make sure to not tell us your story of life. We want brief descriptions of what's wrong to get directly to fixing.
-Also try to make the title describe briefly what's wrong and attach things like logs or screenshots to help illustrate the issue further.
+FAQ
+----
+- What is the 'cable' argument of `"onMidi..."` or `"sendMidi..."` method?
+    - A single USB MIDI endpoint has multiple "virtual MIDI cables". 
+    It's used for increasing the midi channels. The cable number's range is 0 to 15.
+- The application doesn't detect the device even if the USB MIDI device connected.
+    - See the [Trouble shooting](https://github.com/kshoji/USB-MIDI-Driver/wiki/TroubleShooting-on-connecting-an-USB-MIDI-device) documents.
 
-Here is an example, where an imaginary brush that should create a ball, creates a cube:
-
-Title: `Brush A creates Cube instead of Ball`
-
-```
-Expected behaviour:
-Brush A should create a ball with radius 5 when I set it to brush A with brush size 5.
-
-Experienced behaviour:
-Brush A created a cube instead.
-
-Additional Information:
-SpongeForge: 1.10.2-2052-5.0.0-BETA-1675
-Minecraft Forge: 12.18.1.2057
-VoxelSniper: 8.0.0
-```
-
-Additional Information like what java version the server runs on would be appriciated, but is not required at all times.
-
-### Enhancement Request
-
-This is where imagination comes in, but make sure to keep as it easy for us. As mentioned, we don't want your story of life. We want to know what you think would be a good enhancement.
-
-Here is an example of an enhancement request.
-
-Title: `Brush that creates lines`
-
-```
-Enhancement Proposal:
-Creating a brush that creates a line.
-
-Suggested usage:
-You click two points with your arrow and it will create a line with blocks.
-
-Reason of proposal:
-It would be useful, since off angle lines are sometimes hard to make.
-```
-
-Keep in mind that those are guidelines.
-We will still look into stuff that does not follow these guidlines, but it will give you an idea what we want in a ticket and make our life easier.
-
-Pull Requests
--------------
-
-We do accept pull requests and enhancements from third parties. Guidelines how to submit your pull requests properly and how to format your code will come.
-
-Some rough guidelines for now:
-
-- Keep the number of commits to a minimum. We want to look over the commit and basically see what you've done.
-- Coding guidelines should try to comply to the checkstyle rules (checkstyle.xml) but not blindly. Use your mind to make smart decissions.
-- Give us a good description to what you've done.
-- Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
-
-[VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
-[JenkinsJob]: http://ci.thevoxelbox.com/job/VoxelSniper/
-[Sponge]: https://www.spongepowered.org/
-[Gradle]: https://gradle.org/
+License
+====
+[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
